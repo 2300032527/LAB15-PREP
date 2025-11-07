@@ -22,8 +22,9 @@ const EmployeeManager = () => {
   const [loading, setLoading] = useState(false);
 
   // Use hardcoded URL temporarily
-  const baseUrl = `http://localhost:8085/employeeapi`;
-
+  
+  const API_URL = `${import.meta.env.VITE_API_URL}/employeeapi`;
+  
   useEffect(() => {
     fetchAllEmployees();
   }, []);
@@ -31,7 +32,7 @@ const EmployeeManager = () => {
   const fetchAllEmployees = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${baseUrl}/all`);
+      const response = await fetch(`${API_URL}/all`);
       console.log('Response status:', response.status);
       
       if (response.ok) {
@@ -75,7 +76,7 @@ const EmployeeManager = () => {
   const addEmployee = async () => {
     if (!validateForm()) return;
     try {
-      const response = await fetch(`${baseUrl}/add`, {
+      const response = await fetch(`${API_URL}/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +99,7 @@ const EmployeeManager = () => {
   const updateEmployee = async () => {
     if (!validateForm()) return;
     try {
-      const response = await fetch(`${baseUrl}/update`, {
+      const response = await fetch(`${API_URL}/update`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +121,7 @@ const EmployeeManager = () => {
 
   const deleteEmployee = async (id) => {
     try {
-      const response = await fetch(`${baseUrl}/delete/${id}`, {
+      const response = await fetch(`${API_URL}/delete/${id}`, {
         method: 'DELETE'
       });
       
@@ -138,7 +139,7 @@ const EmployeeManager = () => {
 
   const getEmployeeById = async () => {
     try {
-      const response = await fetch(`${baseUrl}/get/${idToFetch}`);
+      const response = await fetch(`${API_URL}/get/${idToFetch}`);
       if (response.ok) {
         const data = await response.json();
         setFetchedEmployee(data);
